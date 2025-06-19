@@ -7,6 +7,7 @@ import Mainscreen from './Screen/Mainscreen';
 import SettingScreen from './Screen/SettingScreen';
 import { Colors } from './utils/Colors';
 import  { ThemeContext } from './Context/ThemeContext';
+import otpvalidation from './Screen/otpvalidation';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +28,7 @@ const Main = () => {
 
   return (
         <NavigationContainer>
-        <Stack.Navigator initialRouteName="Mainscreen">
+        <Stack.Navigator initialRouteName="otpvalidation">
           <Stack.Screen
             name="Mainscreen"
             component={Mainscreen}
@@ -55,10 +56,35 @@ const Main = () => {
           <Stack.Screen
             name="SettingScreen"
             component={SettingScreen}
-            options={{ 
+            options={({navigation}) =>({ 
                title: 'Settings',
                headerShown: true,
                
+              headerStyle : {
+                backgroundColor : currentTheme === 'dark' ? Colors.dark : Colors.light,
+               },
+               headerTitleStyle : {
+                color : currentTheme ==='dark' ? Colors.light : Colors.dark,
+               },
+                headerTintColor: currentTheme === 'dark' ? Colors.light : Colors.dark,
+               
+               headerRight: () => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('otpvalidation')}
+                  style={{ marginRight: 15 }}
+                >
+                  <Text style={{ color: currentTheme ==='dark' ? Colors.light : Colors.dark }}>Logout</Text>
+                </TouchableOpacity>
+              ),
+            })}
+          />
+          <Stack.Screen
+            name="otpvalidation"
+            component={otpvalidation}
+            options={{ 
+               title: 'OTP validation',
+               headerShown: true,
+               headerBackVisible : false,
               headerStyle : {
                 backgroundColor : currentTheme === 'dark' ? Colors.dark : Colors.light,
                },
